@@ -1,0 +1,313 @@
+{% load static %}
+{% include "header2.html" %}
+
+<style>
+      .pagecontent {
+          background-color: grey;
+          height: auto;
+          width: auto;
+          margin-left: 5cm;
+          margin-right: 5cm;
+      }
+    
+      .right-section {
+          background-color: #EDEBEB;
+          color: black;
+          margin-left: 15cm;
+          margin-top: 0cm;
+          margin-right: 2cm;
+          padding: 20px;
+        }
+    </style>
+    
+    <!-- Page Content -->
+    <div class="w3-row-padding w3-padding-64 w3-theme-l1" id="work">
+    
+      <div class="w3-quarter">
+      <h2>Headache Diagnosis</h2>
+      <p>To ensure an accurate diagnosis, we kindly request that you answer all questions 
+        provided. Each question is carefully designed to gather important information about 
+        your symptoms and condition. Your responses will enable our system to generate a 
+        precise diagnosis and tailored recommendations for your specific case.
+        Your cooperation will greatly enhance the effectiveness of our Diagnostic System 
+        in providing you with the best possible care and guidance. Thank you for your 
+        participation.</p>
+      
+      <br>
+      <p>The result of the diagnosis will be showed here.</p>
+      <h1>Result : {{ predict }}</h1>
+    
+      </div>
+    
+      <form method="post">
+        {% csrf_token %}
+      
+        <div class="right-section">
+            <div class="py-2 h5"><b>1. Have you experienced any of the following types of headaches in the past 3 months?</b></div>
+            <br>            
+                        <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">
+                              <div class="container">
+                                    <input type="radio" name="question_1" value="1" id="small-business">
+                                    <label class="options" for="small-business">
+                                          Tension headache (mild to moderate pain, typically on both sides of the head)
+                                    <span class="checkmark"></span>
+                                    </label>
+                              </div>
+                        
+                              <div class="container"> 
+                                    <input type="radio" name="question_1" value="2" id="nonprofit">
+                                    <label class="options" for="nonprofit">
+                                          Migraine headache (moderate to severe pain, often accompanied by nausea and sensitivity to light
+                                          and sound)
+                                    <span class="checkmark"></span>
+                                    </label>
+                              </div>
+                        
+                              <div class="container"> 
+                                    <input type="radio" name="question_1" value="3" id="journalist">
+                                    <label class="options" for="journalist">
+                                          Cluster headache (severe pain, often located around one eye, occurring in clusters over several weeks)
+                                    <span class="checkmark"></span>
+                                    </label>
+                              </div>
+                        
+                              <div class="container"> 
+                                    <input type="radio" name="question_1" value="4" id="other">
+                                    <label class="options" for="other">
+                                          Sinus headache (pressure or pain in the forehead, cheeks, and/or nasal passages)
+                                    <span class="checkmark"></span>
+                                    </label>
+                              </div>
+                        </div>
+
+                        <br>
+                        <div class="py-2 h5"><b>2. How often do you experience headaches?</b></div>
+                        <br>
+                        <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">
+                              <div class="container">
+                                    <input type="radio" name="question_2" value="1" id="small-business">
+                                    <label class="options" for="small-business">
+                                          Daily
+                                    <span class="checkmark"></span>
+                                    </label>
+                              </div>
+                        
+                              <div class="container"> 
+                                    <input type="radio" name="question_2" value="2" id="nonprofit">
+                                    <label class="options" for="nonprofit">
+                                          Several times per week
+                                    <span class="checkmark"></span>
+                                    </label>
+                              </div>
+                        
+                              <div class="container"> 
+                                    <input type="radio" name="question_2" value="3" id="journalist">
+                                    <label class="options" for="journalist">
+                                          Once per week
+                                    <span class="checkmark"></span>
+                                    </label>
+                              </div>
+                        
+                              <div class="container"> 
+                                    <input type="radio" name="question_2" value="4" id="other">
+                                    <label class="options" for="other">
+                                          A few times per month
+                                    <span class="checkmark"></span>
+                                    </label>
+                              </div>
+                        
+                              <div class="container"> 
+                                    <input type="radio" name="question_2" value="5" id="other">
+                                    <label class="options" for="other">
+                                          Rarely (less than once per month)
+                                    <span class="checkmark"></span>
+                                    </label>
+                              </div>
+                        </div>
+
+                        <br>
+                        <div class="py-2 h5"><b>3. How long do your headaches typically last?</b></div>
+                        <br>
+                        <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">
+                              <div class="container">
+                                    <input type="radio" name="question_3" value="1" id="small-business">
+                                    <label class="options" for="small-business">
+                                          Less than 30 minutes
+                                    <span class="checkmark"></span>
+                                    </label>
+                              </div>
+                              
+                              <div class="container"> 
+                                    <input type="radio" name="question_3" value="2" id="nonprofit">
+                                    <label class="options" for="nonprofit">
+                                          30 minutes to 2 hours
+                                    <span class="checkmark"></span>
+                                    </label>
+                              </div>
+                              
+                              <div class="container"> 
+                                    <input type="radio" name="question_3" value="3" id="journalist">
+                                    <label class="options" for="journalist">
+                                          2 to 4 hours
+                                    <span class="checkmark"></span>
+                                    </label>
+                              </div>
+                              
+                              <div class="container"> 
+                                    <input type="radio" name="question_3" value="4" id="other">
+                                    <label class="options" for="other">
+                                          More than 4 hours
+                                    <span class="checkmark"></span>
+                                    </label>
+                              </div>
+                        </div>
+
+                        <br>
+                        <div class="py-2 h5"><b>4. Have you noticed any triggers for your headaches, such as certain foods, stress, or hormonal changes?</b></div>
+                        <br>
+                        <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">
+                              <div class="container">
+                                    <input type="radio" name="question_4" value="1" id="small-business">
+                                    <label class="options" for="small-business">
+                                    Yes
+                                    <span class="checkmark"></span>
+                                    </label>
+                              </div>
+                              
+                              <div class="container"> 
+                                    <input type="radio" name="question_4" value="2" id="nonprofit">
+                                    <label class="options" for="nonprofit">
+                                    No
+                                    <span class="checkmark"></span>
+                                    </label>
+                              </div>
+                              
+                              <div class="container"> 
+                                    <input type="radio" name="question_4" value="3" id="journalist">
+                                    <label class="options" for="journalist">
+                                    Not sure
+                                    <span class="checkmark"></span>
+                                    </label>
+                              </div>
+                        </div>
+
+                        <br>
+                        <div class="py-2 h5"><b>5. Have you sought medical treatment for your headaches?</b></div>
+                        <br>      
+                        <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">
+                              <div class="container">
+                                    <input type="radio" name="question_5" value="1" id="small-business">
+                                    <label class="options" for="small-business">
+                                          Yes, I have seen a healthcare professional
+                                    <span class="checkmark"></span>
+                                    </label>
+                              </div>
+                              
+                              <div class="container"> 
+                                    <input type="radio" name="question_5" value="2" id="nonprofit">
+                                    <label class="options" for="nonprofit">
+                                          Yes, I have self-treated with over-the-counter medications
+                                    <span class="checkmark"></span>
+                                    </label>
+                              </div>
+                              
+                              <div class="container"> 
+                                    <input type="radio" name="question_5" value="3" id="journalist">
+                                    <label class="options" for="journalist">
+                                          No, I have not sought medical treatment
+                                    <span class="checkmark"></span>
+                                    </label>
+                              </div>
+                        </div>
+
+                        <br>
+                        <div class="py-2 h5"><b>6. Have your headaches improved, worsened, or stayed the same over the past few weeks?</b></div>
+                        <br>
+                        <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">
+                              <div class="container">
+                                    <input type="radio" name="question_6" value="1" id="small-business">
+                                    <label class="options" for="small-business">
+                                          Improved
+                                    <span class="checkmark"></span>
+                                    </label>
+                              </div>
+                              
+                              <div class="container"> 
+                                    <input type="radio" name="question_6" value="2" id="nonprofit">
+                                    <label class="options" for="nonprofit">
+                                          Worsened
+                                    <span class="checkmark"></span>
+                                    </label>
+                              </div>
+                              
+                              <div class="container"> 
+                                    <input type="radio" name="question_6" value="3" id="journalist">
+                                    <label class="options" for="journalist">
+                                          Stayed the same.
+                                    <span class="checkmark"></span>
+                                    </label>
+                              </div>
+                        </div>
+
+                        <br>
+                        <div class="py-2 h5"><b>7. Have you noticed any changes in your vision or hearing during or after a headache?</b></div>
+                        <br>
+                        <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">
+                              <div class="container">
+                                    <input type="radio" name="question_7" value="1" id="small-business">
+                                    <label class="options" for="small-business">
+                                    Yes
+                                    <span class="checkmark"></span>
+                                    </label>
+                              </div>
+                              
+                              <div class="container"> 
+                                    <input type="radio" name="question_7" value="2" id="nonprofit">
+                                    <label class="options" for="nonprofit">
+                                    No
+                                    <span class="checkmark"></span>
+                                    </label>
+                              </div>
+                        </div>
+
+                        <br>
+                        <div class="py-2 h5"><b>8. Have you had any other recent health issues or concerns?</b></div>
+                        <br>
+                        <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">
+                        <div class="container">
+                              <input type="radio" name="question_8" value="1" id="small-business">
+                              <label class="options" for="small-business">
+                              Yes
+                              <span class="checkmark"></span>
+                              </label>
+                        </div>
+                        
+                        <div class="container"> 
+                              <input type="radio" name="question_8" value="2" id="nonprofit">
+                              <label class="options" for="nonprofit">
+                              No
+                              <span class="checkmark"></span>
+                              </label>
+                        </div>
+                  </div>
+
+                  <br>
+                  <div style="text-align: center;">
+                        <input type="submit" class="btn btn-primary">
+                  </div>
+            </form>
+
+      </div>
+</div>
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+{% include "footer.html" %}
+</body>
+</html>

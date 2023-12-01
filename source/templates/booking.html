@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+{% include 'header2.html' %}
+<body>
+  <div class="w3-container w3-padding-64 w3-theme-l5" id="booking">
+    <div class="w3-content" style="max-width:1100px;margin-top:80px">
+      <h1 style="color:rgb(3, 3, 3); font-weight: 700;">
+        <i class="fas"></i> Doctor Booking Appointment Form
+      </h1>
+      <br>
+      <div class="w3-container w3-padding-64 w3-theme-l5" id="booking1">
+        <div class="w3-row">
+          <div class="w3-col m5">
+            <div class="w3-padding-16"><span class="w3-xlarge w3-border-teal w3-bottombar">Booking Form</span></div>
+            <p>To book your appointment, please provide the following information in the form: </p>
+            <p><i class="fa fa-user-circle-o w3-text-teal w3-xlarge"></i>  Full name</p>
+            <p><i class="fa fa-id-card-o w3-text-teal w3-xlarge"></i>  IC number (12-digits without "-")</p>
+            <p><i class="fa fa-medkit w3-text-teal w3-xlarge"></i>  The disease that you have</p>
+            <p><i class="fa fa-hospital-o w3-text-teal w3-xlarge"></i>  Preferred hospitals or clinic</p>
+            <p><i class="fa fa-calendar-check-o w3-text-teal w3-xlarge"></i>  Preferred date and time for the appointment</p>
+            <p><i class="fa fa-commenting-o w3-text-teal w3-xlarge"></i>  Appointment description</p>
+          </div>
+          <div class="w3-col m7">
+            <div class="w3-section">
+              <label>Date and Time</label>
+              <form method="POST" action="{% url 'bookingChecker' %}">
+                {% csrf_token %}
+                <input class="w3-input" type="date" name="date" id="booking-date" placeholder="Select Booking Date and Time" required>
+                <button type="submit" class="w3-button w3-theme">Find Date</button>
+              </form>
+            </div>
+            <form class="w3-container w3-card-4 w3-padding-16 w3-white" method="POST" action="{% url 'Booking' %}">
+              {% csrf_token %}
+              <input type="hidden" name="booking_date" value="{{ booking_date }}">
+              <div class="w3-section">      
+                <label>Full Name</label>
+                <input class="w3-input" type="text" name="name" placeholder="Full Name" required>
+              </div>
+              <div class="w3-section">      
+                <label>IC Number</label>
+                <input class="w3-input" type="text" name="ic_number" placeholder="IC Number (12-digits without '-')" required>
+              </div>
+              <div class="w3-section">      
+                <label>Disease You Have</label>
+                <select class="w3-select" name="disease_you_have" required>
+                  <option value="" disabled selected>Select a disease</option>
+                  <option>Allergies</option>
+                  <option>Colds and Flu</option>
+                  <option>Conjunctivitis</option>
+                  <option>Diarrhea</option>
+                  <option>Headaches</option>
+                  <option>Mononucleosis</option>
+                  <option>Stomachache</option>
+                </select>
+              </div>
+              <div class="w3-section">      
+                <label>Location</label>
+                <select class="w3-select" name="clinic_or_hospital" required>
+                  <option value="" disabled selected>Select a clinic or hospital</option>
+                  <option>Klinik Kesihatan Batu 17, Tapah</option>
+                  <option>Klinik Kesihatan Tapah, Tapah</option>
+                  <option>Hospital Tapah, Tapah</option>
+                </select>
+              </div>
+              <div class="w3-section" id="time-slots">
+                <label>Select Time Slot</label>
+                <div id="time-slot-options">
+                    {% if checker %}
+                        {% if checker.slot_9am %}
+                            <input class="w3-radio" type="radio" name="time_slot" value="9am" required>
+                            <label>9am</label>
+                        {% endif %}
+                        {% if checker.slot_11am %}
+                            <input class="w3-radio" type="radio" name="time_slot" value="11am" required>
+                            <label>11am</label>
+                        {% endif %}
+                        {% if checker.slot_1pm %}
+                            <input class="w3-radio" type="radio" name="time_slot" value="1pm" required>
+                            <label>1pm</label>
+                        {% endif %}
+                        {% if checker.slot_3pm %}
+                            <input class="w3-radio" type="radio" name="time_slot" value="3pm" required>
+                            <label>3pm</label>
+                        {% endif %}
+                        {% if checker.slot_5pm %}
+                            <input class="w3-radio" type="radio" name="time_slot" value="5pm" required>
+                            <label>5pm</label>
+                        {% endif %}
+                    {% else %}
+                        <p>No available time slots for the selected date.</p>
+                    {% endif %}
+                </div>
+            </div>
+              <div class="w3-section">      
+                <label>Description</label>
+                <input class="w3-input" type="text" name="description" placeholder="Description" required>
+              </div>
+              <button type="submit" class="w3-button w3-right w3-theme">Book</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% include 'footer.html' %}
+</body>
+</html>

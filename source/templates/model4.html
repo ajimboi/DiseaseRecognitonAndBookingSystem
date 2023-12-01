@@ -1,0 +1,313 @@
+{% load static %}
+{% include "header2.html" %}
+
+<style>
+  .pagecontent {
+      background-color: grey;
+      height: auto;
+      width: auto;
+      margin-left: 5cm;
+      margin-right: 5cm;
+  }
+
+  .right-section {
+      background-color: #EDEBEB;
+      color: black;
+      margin-left: 15cm;
+      margin-top: 0cm;
+      margin-right: 2cm;
+      padding: 20px;
+    }
+</style>
+
+<!-- Page Content -->
+<div class="w3-row-padding w3-padding-64 w3-theme-l1" id="work">
+
+  <div class="w3-quarter">
+  <h2>Diarrhea Diagnosis</h2>
+  <p>To ensure an accurate diagnosis, we kindly request that you answer all questions 
+    provided. Each question is carefully designed to gather important information about 
+    your symptoms and condition. Your responses will enable our system to generate a 
+    precise diagnosis and tailored recommendations for your specific case.
+    Your cooperation will greatly enhance the effectiveness of our Diagnostic System 
+    in providing you with the best possible care and guidance. Thank you for your 
+    participation.</p>
+  
+  <br>
+  <p>The result of the diagnosis will be showed here.</p>
+  <h1>Result : {{ predict }}</h1>
+
+  </div>
+
+  <form method="post">
+    {% csrf_token %}
+  
+    <div class="right-section">
+      
+      <div class="py-2 h5"><b>1. Have you experienced any of the following symptoms in the past 48 hours? </b></div>
+      <br>
+          <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">
+            <div class="container">
+              <input type="radio" name="question_1" value="1" id="small-business">
+              <label class="options" for="small-business">
+                Loose or watery stools
+                <span class="checkmark"></span>
+              </label>
+            </div>
+          
+            <div class="container"> 
+              <input type="radio" name="question_1" value="2" id="nonprofit">
+              <label class="options" for="nonprofit">
+                Abdominal cramping or pain
+                <span class="checkmark"></span>
+              </label>
+            </div>
+          
+            <div class="container"> 
+              <input type="radio" name="question_1" value="3" id="journalist">
+              <label class="options" for="journalist">
+                Nausea or vomiting
+                <span class="checkmark"></span>
+              </label>
+            </div>
+          
+            <div class="container"> 
+              <input type="radio" name="question_1" value="4" id="other">
+              <label class="options" for="other">
+                Fever
+                <span class="checkmark"></span>
+              </label>
+            </div>
+            <div class="container"> 
+              <input type="radio" name="question_1" value="5" id="other">
+              <label class="options" for="other">
+                Dehydration (thirst, dry mouth, dark urine)
+                <span class="checkmark"></span>
+              </label>
+            </div>
+            <div class="container"> 
+              <input type="radio" name="question_1" value="6" id="other">
+              <label class="options" for="other">
+                Blood or mucus in stool
+                <span class="checkmark"></span>
+              </label>
+            </div>
+          </div>
+
+          <br>
+          <div class="py-2 h5"><b>2. How many times have you had a bowel movement in the past 24 hours?</b></div>
+          <br>
+          <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">
+          <div class="container">
+            <input type="radio" name="question_2" value="1" id="small-business">
+            <label class="options" for="small-business">
+              1-3 times
+              <span class="checkmark"></span>
+            </label>
+          </div>
+          <div class="container"> 
+            <input type="radio" name="question_2" value="2" id="nonprofit">
+            <label class="options" for="nonprofit">
+              4-6 times
+              <span class="checkmark"></span>
+            </label>
+          </div>
+          <div class="container"> 
+            <input type="radio" name="question_2" value="3" id="journalist">
+            <label class="options" for="journalist">
+              7 or more times
+              <span class="checkmark"></span>
+            </label>
+          </div>
+        </div>
+
+        <br>
+        <div class="py-2 h5"><b>3.	How long have you had diarrhea symptoms?</b></div>
+        <br>  
+        <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">
+            <div class="container">
+              <input type="radio" name="question_3" value="1" id="small-business">
+              <label class="options" for="small-business">
+                Less than 24 hours
+                <span class="checkmark"></span>
+              </label>
+            </div>
+          
+            <div class="container"> 
+              <input type="radio" name="question_3" value="2" id="nonprofit">
+              <label class="options" for="nonprofit">
+                24 to 48 hours
+                <span class="checkmark"></span>
+              </label>
+            </div>
+          
+            <div class="container"> 
+              <input type="radio" name="question_3" value="3" id="journalist">
+              <label class="options" for="journalist">
+                More than 48 hours
+                <span class="checkmark"></span>
+              </label>
+            </div>
+        </div>
+
+        <br>
+        <div class="py-2 h5"><b>4. Have you recently traveled to a foreign country or consumed food or water that may have been contaminated?</b></div>
+        <br>  
+        <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">
+            <div class="container">
+              <input type="radio" name="question_4" value="1" id="small-business">
+              <label class="options" for="small-business">
+                Yes
+                <span class="checkmark"></span>
+              </label>
+            </div>
+            <div class="container"> 
+              <input type="radio" name="question_4" value="2" id="nonprofit">
+              <label class="options" for="nonprofit">
+                No
+                <span class="checkmark"></span>
+              </label>
+            </div>
+        </div>
+
+        <br>
+        <div class="py-2 h5"><b>5. Have you taken any antibiotics in the past month?</b></div>
+        <br>
+        <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">
+          <div class="container">
+            <input type="radio" name="question_5" value="1" id="small-business">
+            <label class="options" for="small-business">
+              Yes
+              <span class="checkmark"></span>
+            </label>
+          </div>
+        
+          <div class="container"> 
+            <input type="radio" name="question_5" value="2" id="nonprofit">
+            <label class="options" for="nonprofit">
+              No
+              <span class="checkmark"></span>
+            </label>
+          </div>
+      </div>
+
+      <br>
+      <div class="py-2 h5"><b>6. Have you recently been in contact with someone who has had diarrhea or other gastrointestinal symptoms?</b></div>
+      <br>
+        <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">
+          <div class="container">
+            <input type="radio" name="question_6" value="1" id="small-business">
+            <label class="options" for="small-business">
+              Yes
+              <span class="checkmark"></span>
+            </label>
+          </div>
+        
+          <div class="container"> 
+            <input type="radio" name="question_6" value="2" id="nonprofit">
+            <label class="options" for="nonprofit">
+              No
+              <span class="checkmark"></span>
+            </label>
+          </div>
+        
+          <div class="container"> 
+            <input type="radio" name="question_6" value="3" id="journalist">
+            <label class="options" for="journalist">
+              I'm not sure
+              <span class="checkmark"></span>
+            </label>
+          </div>
+      </div>
+
+      <br>
+      <div class="py-2 h5"><b>7. Have you sought medical treatment for your symptoms?</b></div>
+      <br>  
+      <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">
+          <div class="container">
+            <input type="radio" name="question_7" value="1" id="small-business">
+            <label class="options" for="small-business">
+              Yes, I have seen a healthcare professional
+              <span class="checkmark"></span>
+            </label>
+          </div>
+        
+          <div class="container"> 
+            <input type="radio" name="question_7" value="2" id="nonprofit">
+            <label class="options" for="nonprofit">
+              Yes, I have self-treated with over-the-counter medications
+              <span class="checkmark"></span>
+            </label>
+          </div>
+          <div class="container"> 
+            <input type="radio" name="question_7" value="3" id="nonprofit">
+            <label class="options" for="nonprofit">
+              No, I have not sought medical treatment
+              <span class="checkmark"></span>
+            </label>
+          </div>
+      </div>
+
+      <br>
+      <div class="py-2 h5"><b>8. Have your symptoms improved, worsened, or stayed the same over the past few days?</b></div>
+      <br>  
+      <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">
+          <div class="container">
+            <input type="radio" name="question_8" value="1" id="small-business">
+            <label class="options" for="small-business">
+              Improved
+              <span class="checkmark"></span>
+            </label>
+          </div>
+        
+          <div class="container"> 
+            <input type="radio" name="question_8" value="2" id="nonprofit">
+            <label class="options" for="nonprofit">
+              Worsened
+              <span class="checkmark"></span>
+            </label>
+          </div>
+          <div class="container"> 
+            <input type="radio" name="question_8" value="3" id="nonprofit">
+            <label class="options" for="nonprofit">
+              Stayed the same
+              <span class="checkmark"></span>
+            </label>
+          </div>
+      </div>
+
+      <br>
+      <div class="py-2 h5"><b>9. Have you had any other recent health issues or concerns? </b></div>
+      <br>  
+      <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">
+          <div class="container">
+            <input type="radio" name="question_9" value="1" id="small-business">
+            <label class="options" for="small-business">
+              Yes
+              <span class="checkmark"></span>
+            </label>
+          </div>
+          <div class="container"> 
+            <input type="radio" name="question_9" value="2" id="nonprofit">
+            <label class="options" for="nonprofit">
+              No
+              <span class="checkmark"></span>
+            </label>
+          </div>
+      </div>
+      <br>
+        <div style="text-align: center;">
+          <input type="submit" class="btn btn-primary">
+        </div>
+      </form>
+
+    </div>
+</div>
+
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+      {% include "footer.html" %}
+</body>
+</html>
